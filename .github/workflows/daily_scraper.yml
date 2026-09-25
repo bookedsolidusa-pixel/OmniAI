@@ -1,0 +1,29 @@
+name: Daily Lead Generation Pipeline
+
+on:
+  schedule:
+    # Runs automatically at 8:00 AM PST (15:00 UTC) every day
+    - cron: '0 15 * * *'
+  workflow_dispatch: # Allows manual run button anytime
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install outscraper requests
+
+      - name: Execute Lead Scraper
+        env:
+          OUTSCRAPER_API_KEY: ${{ secrets.OUTSCRAPER_API_KEY }}
+          ZAPIER_WEBHOOK_URL: ${{ secrets.ZAPIER_WEBHOOK_URL }}
+        run: python outscraper_leads.py
