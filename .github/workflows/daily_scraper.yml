@@ -20,10 +20,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install outscraper requests
+          pip install apify-client requests
 
-      - name: Execute Lead Scraper
+      - name: Execute Apify Lead Scraper
         env:
-          OUTSCRAPER_API_KEY: ${{ secrets.OUTSCRAPER_API_KEY }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
           ZAPIER_WEBHOOK_URL: ${{ secrets.ZAPIER_WEBHOOK_URL }}
-        run: python outscraper_leads.py
+        run: python apify_leads.py
